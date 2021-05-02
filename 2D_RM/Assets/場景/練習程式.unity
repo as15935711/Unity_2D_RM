@@ -132,7 +132,6 @@ GameObject:
   - component: {fileID: 666166511}
   - component: {fileID: 666166510}
   - component: {fileID: 666166512}
-  - component: {fileID: 666166513}
   m_Layer: 0
   m_Name: Attack (1)
   m_TagString: Untagged
@@ -216,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ad1fc5913f8a5499952ee8cdc147cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cc: 1000
+  cc: 1144
   weight: 0.5
   brand: BMW
   hasWindow: 1
@@ -238,26 +237,9 @@ MonoBehaviour:
   obj2: {fileID: 0}
   tra: {fileID: 0}
   spr: {fileID: 0}
---- !u!114 &666166513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 666166509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cd759f6d22f4d349b92d687467356a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 10.5
-  Jump: 100
-  HP: 100
-  inFloor: 0
-  Bullet: {fileID: 0}
-  traB: {fileID: 0}
-  BulletSpeed: 800
-  BiuA: {fileID: 0}
+  number: 1
+  test: 0
+  prop: "\u7D05\u8272\u85E5\u6C34"
 --- !u!1 &2060055521
 GameObject:
   m_ObjectHideFlags: 0

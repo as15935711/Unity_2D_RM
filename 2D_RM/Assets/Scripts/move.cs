@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class move : MonoBehaviour
 {
+    #region 欄位
     [Header("汽車的 cc 數")]
     [Tooltip("這是汽車的 cc 數")]
     [Range(1000,5000)]
@@ -14,7 +15,7 @@ public class move : MonoBehaviour
     public string brand = "BMW";
     [Header("有沒有天窗")]
     public bool hasWindow =true ;
-
+    
 
     public Color color;
     public Color red = Color.red;
@@ -42,6 +43,74 @@ public class move : MonoBehaviour
     //元件 Component - 屬性面板上可摺疊的
     public Transform tra;
     public SpriteRenderer spr;
+    #endregion
+    #region 事件
+    public int number = 1;
+    public bool test = false;
+    public string prop = "紅色藥水";
+    //事件 :在特定時間點會被執行的方法
+    //Unity 提供的事件 : 開始 更新
+    //開始事件 :播放遊戲後執行一次
+    //應用 :數值初始畫，例如:遊戲一開始多少金幣或生命值等等...
+    private void Start()
+    {
+        //print(任何資料) - 輸出資料到 Console 儀表板上
+        print("我是開始事件唷~");
 
+        //欄位存取
+        //取得
+        //語法 : 欄位名稱
+        print("取得欄位:" + number);
+        //存放
+        //語法 : 欄位名稱 指定 值;
+        test = true;
+        print("存放欄位後的結果:" + test);
+
+        prop = "藍色藥水";
+        print("存放後的道具名稱" + prop);
+
+        // 呼叫方法
+        //方法名稱();
+        
+        Test();
+        //傳回方法 :
+        //傳回類型 名稱=傳回方法();
+        int t = Ten();
+        print("傳回方法的結果 : " + t);
+    }
+
+    //更新事件執行時間點與次數 : 開始事件後以每秒約六十次執行 60FPS
+    //應用 : 監聽玩家輸入與物件持續行為，例如 : 玩家有沒有按按鈕或讓物件持續移動
+    private void Update()
+    {
+        print("我是更新事件!!");
+    }
+    #endregion
+
+    #region 方法
+    //方法 : 保存較複雜或演算法的程式區塊
+    //語法 : 
+    //修飾詞 傳回類型 名稱() { 較複雜或演算法的程式區塊 }
+    //void 無傳回 : 使用這個方法不會有傳回
+    //方法需要被呼叫才會執行
+    /// <summary>
+    /// 我是一個測試方法
+    /// </summary>
+    private void Test()
+    {
+        print("我是測試方法");
+    }
+
+    //如果不是無傳回void
+    //在大括號內必須使用 傳回 return 值 (必須跟傳回類型相同)
+    /// <summary>
+    /// 傳回整數十的方法
+    /// </summary>
+    /// <returns>整數十</returns>
+
+    private int Ten()
+    {
+        return 10;
+    }
+        #endregion
 }
- 
