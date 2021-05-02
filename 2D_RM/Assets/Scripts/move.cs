@@ -7,19 +7,19 @@ public class move : MonoBehaviour
     #region 欄位
     [Header("汽車的 cc 數")]
     [Tooltip("這是汽車的 cc 數")]
-    [Range(1000,5000)]
+    [Range(1000, 5000)]
     public int cc = 2000;
-    [Header("汽車的重量"), Tooltip("這是汽車的重量。"), Range(0.5f,10)]
+    [Header("汽車的重量"), Tooltip("這是汽車的重量。"), Range(0.5f, 10)]
     public float weight = 1.5f;
     [Header("汽車的品牌")]
     public string brand = "BMW";
     [Header("有沒有天窗")]
-    public bool hasWindow =true ;
-    
+    public bool hasWindow = true;
+
 
     public Color color;
     public Color red = Color.red;
-    public Color mycolor =new Color(0.3f, 0 ,0.6f);
+    public Color mycolor = new Color(0.3f, 0, 0.6f);
     public Color mycolor2 = new Color(0, 0.5f, 0.5f, 0.5f);
 
     //座標二維-四維 Vector2 Vector3 Vector4
@@ -71,12 +71,22 @@ public class move : MonoBehaviour
 
         // 呼叫方法
         //方法名稱();
-        
+
         Test();
         //傳回方法 :
         //傳回類型 名稱=傳回方法();
         int t = Ten();
         print("傳回方法的結果 : " + t);
+
+        Drive50();
+        //呼叫方法要有相同數量的參數
+        //有預設值得參數為<選填是參數>
+        Drive(200, "咻咻咻");
+        Drive(800, "咚咚咚");
+        //有多個選填式參數
+        Drive(50, "閃電");                 //錯誤 - 把特效放在音效上
+        Drive(50, effect: "閃電");        //正確 - 指定特效參數
+
     }
 
     //更新事件執行時間點與次數 : 開始事件後以每秒約六十次執行 60FPS
@@ -112,5 +122,43 @@ public class move : MonoBehaviour
     {
         return 10;
     }
-        #endregion
+
+    //舉例 :
+    //三個方法 1. 以時速 50 開車 2. 時速100 3.時速300
+    //加新功能 要有音效
+    private void Drive50()
+    {
+        print("開車時速:" + 50);
+        print("開車音效");
+    }
+    private void Drive100()
+    {
+        print("開車時速:" + 100);
+        print("開車音效");
+    }
+    private void Drive300()
+    {
+        print("開車時速:" + 300);
+        print("開車音效");
+    }
+
+    //用參數解決 Paramater
+    //參數語法 : 類型 參數名稱
+    /// <summary>
+    /// 開車
+    /// </summary>
+    /// <param name="speed">開車的時速</param>
+    /// <param name="sound">開車的音效</param>
+    /// <param name="effect">開車的特效</param>
+    //有預設值得參數只能寫在最右邊
+    private void Drive(int speed, string sound = "咻~", string effect = "灰塵特效")
+    {
+        print("開車時速:" + speed);
+        print("開車音效" + sound);
+        print("開車特效" + effect);
+
+    }
+
+    #endregion
+
 }
