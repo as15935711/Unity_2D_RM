@@ -22,30 +22,46 @@ public class Player : MonoBehaviour
     [Header("開槍音效"), Tooltip("這是開槍音效")]
     public AudioClip BiuAudio;
     private AudioSource Aud;
-    private Rigidbody2D Rig;
+    private Rigidbody2D rig;
     private Animator Ani;
     #endregion
 
     #region 方法
-   
-
     private void Start()
     {
+        //利用程式取的元件
+        //傳回元件 取得元件<元件名稱>() - <泛型>
+        //取得跟此腳本同一層的原件
+        rig = GetComponent<Rigidbody2D>();
+    }
 
+
+    private void Update()
+    {
+        Move();
     }
     /// <summary>
     /// 移動
     /// </summary>
-    private void move()
+    private void Move()
     {
-       
+        //1. 要抓到玩家按下左右鍵的資訊
+       float h = Input.GetAxis("Horizontal");
+        print("水平的值: " + h);
+        //2. 使用左右鍵的資訊控制腳色
+        //剛體.加速度 = 二維向量(水平 * 速度 * 一幀的時間, 指定回原本的 Y 軸加速度 )
+        //一幀的時間 - 解決不同效能的裝置速度差問題
+        rig.velocity = new Vector2(h * Speed * Time.deltaTime, rig.velocity.y);
+
     }
     /// <summary>
     /// 跳躍
     /// </summary>
     private void Jump_()
     {
-       
+       //如果 玩家 按下 空白鍵 就 往上跳躍
+       //判斷式C#
+
     }
     /// <summary>
     /// 開槍
