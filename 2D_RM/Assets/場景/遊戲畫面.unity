@@ -734,14 +734,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cd759f6d22f4d349b92d687467356a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 10.5
-  Jump: 100
+  Speed: 1000
+  Jumph: 306
   HP: 100
   inFloor: 0
   Bullet: {fileID: 1567595893574533919, guid: da837ae1c38a79944a9e2bb516631bbd, type: 3}
   traB: {fileID: 2142838488}
   BulletSpeed: 800
   BiuAudio: {fileID: 0}
+  groundOffset: {x: -0.1, y: -1.2, z: 0}
+  groundRafius: 0.15
 --- !u!1 &739124163
 GameObject:
   m_ObjectHideFlags: 0

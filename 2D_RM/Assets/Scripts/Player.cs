@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     [Header("移動速度"), Range(0, 1000)]
     public float Speed = 10.5f;
     [Header("跳越高度"), Range(0, 3000)]
-    public int Jump = 100;
+    public int Jumph = 100;
     [Range(0, 200)]
     public float HP = 100;
     [Header("是否在地板上"), Tooltip("這是否在地板上")]
@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     private Animator Ani;
     #endregion
 
-    #region 方法
+    #region 事件
     private void Start()
     {
         //利用程式取的元件
@@ -35,11 +35,29 @@ public class Player : MonoBehaviour
         rig = GetComponent<Rigidbody2D>();
     }
 
-
+    //一秒約執行60次
     private void Update()
     {
         Move();
+        Jump();
     }
+
+    [Header("判斷地板碰撞的位移與半徑")]
+    public Vector3 groundOffset;
+    public float groundRafius = 0.2f;
+
+    //繪製圖式 - 輔助編輯時的圖形線條
+    private void OnDrawGizmos()
+    {
+        // 1. 指定顏色
+        Gizmos.color = new Color(1, 0, 0, 0.5f);
+        // 2. 繪製圖形
+        //transform 可以抓到此腳本同一層的變形元件
+        Gizmos.DrawSphere(transform.position + groundOffset, groundRafius);
+    }
+    #endregion
+
+    #region 方法
     /// <summary>
     /// 移動
     /// </summary>
@@ -57,12 +75,20 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 跳躍
     /// </summary>
-    private void Jump_()
+    private void Jump()
     {
-       //如果 玩家 按下 空白鍵 就 往上跳躍
-       //判斷式C#
+        //如果 玩家 按下 空白鍵 就 往上跳躍
+        //判斷式C#
+        //傳回值為布林值的方法可以當成布林值使用
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //剛體.添加推力(二維向量)
+            rig.AddForce(new Vector2(0,Jumph));
+        }
 
+        
     }
+
     /// <summary>
     /// 開槍
     /// </summary>
