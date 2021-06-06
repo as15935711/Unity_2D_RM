@@ -540,7 +540,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 39.769714, y: -145}
+  m_AnchoredPosition: {x: 39.769775, y: -145}
   m_SizeDelta: {x: 31.459229, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &675389488
@@ -737,7 +737,7 @@ MonoBehaviour:
   Speed: 1000
   Jumph: 306
   HP: 100
-  inFloor: 0
+  isGrounded: 0
   Bullet: {fileID: 1567595893574533919, guid: da837ae1c38a79944a9e2bb516631bbd, type: 3}
   traB: {fileID: 2142838488}
   BulletSpeed: 800
@@ -2221,7 +2221,7 @@ GameObject:
   - component: {fileID: 1392578074}
   - component: {fileID: 1392578076}
   - component: {fileID: 1392578075}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\u5730\u677F"
   m_TagString: Untagged
   m_Icon: {fileID: 0}

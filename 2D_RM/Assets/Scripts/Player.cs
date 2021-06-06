@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [Range(0, 200)]
     public float HP = 100;
     [Header("是否在地板上"), Tooltip("這是否在地板上")]
-    public bool inFloor = false;
+    public bool isGrounded = false;
     [Header("子彈"), Tooltip("這是子彈")]
     public GameObject Bullet;
     [Header("子彈生成點"), Tooltip("這是子彈生成點")]
@@ -80,13 +80,35 @@ public class Player : MonoBehaviour
         //如果 玩家 按下 空白鍵 就 往上跳躍
         //判斷式C#
         //傳回值為布林值的方法可以當成布林值使用
-        if (Input.GetKeyDown(KeyCode.Space))
+        //@ 判斷布林值是否等於true寫法
+        //1. isGrounded == true(原本寫法)
+        //2. isGrounded (簡寫)
+        if (Input.GetKeyDown(KeyCode.Space)&& isGrounded)
         {
             //剛體.添加推力(二維向量)
             rig.AddForce(new Vector2(0,Jumph));
         }
+        //碰到的物件= 2D物理.覆蓋圓形(中心點.半徑)
+        //圖層語法 : 1<< 圖層邊號(LayerMask int)
+        Collider2D hit = Physics2D.OverlapCircle(transform.position + groundOffset, groundRafius, 1 << 8);
 
-        
+        //print("碰到的物件:" + hit.name);
+
+        //如果碰到的物件 存在 並且 碰到的物件名撐 等於 地板 就代表在地板上
+        //並且&& (SHIFT+7)
+        //等於 ==
+
+        if (hit && hit.name =="地板")
+        {
+            isGrounded = true;
+        }
+        //否則不在地板上
+        //否則 else
+        //語法: else{ 程式區塊 } - 僅能寫在 if 下方
+        else
+        {
+            isGrounded = false;
+        }
     }
 
     /// <summary>
