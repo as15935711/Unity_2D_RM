@@ -53,7 +53,11 @@ public class Player : MonoBehaviour
         Gizmos.color = new Color(1, 0, 0, 0.5f);
         // 2. 繪製圖形
         //transform 可以抓到此腳本同一層的變形元件
-        Gizmos.DrawSphere(transform.position + groundOffset, groundRafius);
+        //繪製球體(中心點.半徑)
+        //物件的右方 X 軸 : transform.right
+        //物件的右方 Y 軸 : transform.up
+        //物件的右方 Z 軸 : transform.forward
+        Gizmos.DrawSphere(transform.position + transform.right * groundOffset.x + transform.up * groundOffset.y , groundRafius);
     }
     #endregion
 
@@ -71,6 +75,16 @@ public class Player : MonoBehaviour
         //一幀的時間 - 解決不同效能的裝置速度差問題
         rig.velocity = new Vector2(h * Speed * Time.deltaTime, rig.velocity.y);
 
+        //如果按下 D 面向右邊 0 0 0
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            transform.eulerAngles = Vector3.zero;
+        }    
+        //否則 如果按下A面向左邊 0 180 0
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            transform.eulerAngles = new Vector3(0, 180, 0);
+        }
     }
     /// <summary>
     /// 跳躍
@@ -90,15 +104,17 @@ public class Player : MonoBehaviour
         }
         //碰到的物件= 2D物理.覆蓋圓形(中心點.半徑)
         //圖層語法 : 1<< 圖層邊號(LayerMask int)
-        Collider2D hit = Physics2D.OverlapCircle(transform.position + groundOffset, groundRafius, 1 << 8);
+        Collider2D hit = Physics2D.OverlapCircle(transform.position + transform.right * groundOffset.x + transform.up * groundOffset.y, groundRafius, 1 << 8);
 
-        //print("碰到的物件:" + hit.name);
+        print("碰到的物件:" + hit.name);
 
         //如果碰到的物件 存在 並且 碰到的物件名撐 等於 地板 就代表在地板上
         //並且&& (SHIFT+7)
         //等於 ==
+        //或者 || (SHIFT + \)
+        //或者 名稱 等於 跳台
 
-        if (hit && hit.name =="地板")
+        if (hit && (hit.name =="地板" || hit.name == "跳台"))
         {
             isGrounded = true;
         }
