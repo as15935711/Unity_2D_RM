@@ -15,15 +15,20 @@ public class Player : MonoBehaviour
     public bool isGrounded = false;
     [Header("子彈"), Tooltip("這是子彈")]
     public GameObject Bullet;
-    [Header("子彈生成點"), Tooltip("這是子彈生成點")]
-    public Transform traB;
-    [Range(0, 5000)]
+    [Header("子彈速度"),Range(0, 5000)]
     public int BulletSpeed = 800;
     [Header("開槍音效"), Tooltip("這是開槍音效")]
+    [Header("判斷地板碰撞的位移與半徑")]
+    public Vector3 groundOffset;
+    public float groundRafius = 0.2f;
+    [Header("子彈生成位置")]
+    public Vector3 posBullet;
+
     public AudioClip BiuAudio;
     private AudioSource Aud;
     private Rigidbody2D rig;
     private Animator Ani;
+    private ParticleSystem ps;
     #endregion
 
     #region 事件
@@ -35,6 +40,12 @@ public class Player : MonoBehaviour
         rig = GetComponent<Rigidbody2D>();
         Ani = GetComponent<Animator>();
         Aud = GetComponent<AudioSource>();
+
+        //粒子系統 = 變形元件.搜尋子物件("物件特效")
+       ps = transform.Find("集氣特效").GetComponent<ParticleSystem>();
+
+        //2D物理.忽略圖層碰撞 (圖層1 .圖層2 .是否要忽略)
+        Physics2D.IgnoreLayerCollision(9, 10, true);
     }
 
     //一秒約執行60次
@@ -45,9 +56,6 @@ public class Player : MonoBehaviour
         Fire();
     }
 
-    [Header("判斷地板碰撞的位移與半徑")]
-    public Vector3 groundOffset;
-    public float groundRafius = 0.2f;
 
     //繪製圖式 - 輔助編輯時的圖形線條
     private void OnDrawGizmos()
@@ -61,6 +69,11 @@ public class Player : MonoBehaviour
         //物件的右方 Y 軸 : transform.up
         //物件的右方 Z 軸 : transform.forward
         Gizmos.DrawSphere(transform.position + transform.right * groundOffset.x + transform.up * groundOffset.y , groundRafius);
+
+        //先指定顏色在畫圓型
+        Gizmos.color = new Color(0, 0, 1, 0.5f);
+        Gizmos.DrawSphere(transform.position + transform.right * posBullet.x + transform.up * posBullet.y, 0.1f);
+
     }
     #endregion
 
@@ -138,6 +151,10 @@ public class Player : MonoBehaviour
             isGrounded = false;
         }
     }
+    /// <summary>
+    /// 紀錄按下左件的計時器
+    /// </smmary>
+    private float timer;
 
     /// <summary>
     /// 開槍
@@ -148,9 +165,42 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Ani.SetTrigger("攻擊觸發");
-            Aud.PlayOneShot(BiuAudio, 0.5f);
+            ps.Play();              //播放集氣
+           
         }
-    }
+        else if (Input.GetKey(KeyCode.Mouse0))
+        {
+            //累加+=
+            timer += Time.deltaTime;
+            //print("按住左鍵的時間" + timer);
+        }
+        // 放開左鍵
+        else if(Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            ps.Stop();       //停止集氣
+            Aud.PlayOneShot(BiuAudio, 0.5f);
+
+            // Object.Instantiate(Bullet);//原始寫法
+            //Quaternion 四位元 -角度
+            //Quaternion.identity 零角度
+            GameObject temp = Instantiate(Bullet, transform.position + transform.right * posBullet.x + transform.up * posBullet.y, Quaternion.identity);      //簡寫
+
+            //暫存物件 . 取得原件 <2D鋼體>().添加推力 (腳色的前方 * 子彈速度)
+            temp.GetComponent<Rigidbody2D>().AddForce(transform.right * BulletSpeed);
+            //刪除 (物件,延遲秒數)
+            Destroy(temp, 2f);
+
+            //計時器 = 數學 .夾住 (計時器 .最小 .最大)
+            timer = Mathf.Clamp(timer, 0, 5);
+
+            //集氣:調整子彈尺寸
+            //temp.transform.lossyScale = Vector3.one; //lossyScale 為唯讀 Read Only - 不能指定值
+            temp.transform.localScale = Vector3.one + Vector3.one * timer;
+
+            //計時器歸零
+            timer = 0;
+        }
+                }
     /// <summary>
     /// 受傷
     /// </summary>
