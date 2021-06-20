@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8753526078283296247}
   - component: {fileID: 2681728601756418170}
   - component: {fileID: 4499465386999407825}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: "\u5B50\u5F48"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1567595893574533919}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -5.502, y: -2.293, z: -0.51}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &9110374781897850545
 ParticleSystem:
   m_ObjectHideFlags: 0
